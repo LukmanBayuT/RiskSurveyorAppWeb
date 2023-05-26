@@ -143,7 +143,8 @@ class SurveyDocumentState extends State<SurveyDocument> {
     return FutureBuilder<XFile?>(
       future: xFile,
       builder: (BuildContext context, AsyncSnapshot<XFile?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && null != snapshot.data) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            null != snapshot.data) {
           tmpFile = File(snapshot.data!.path);
           base64Image = base64Encode(tmpFile!.readAsBytesSync());
           return Image.file(
@@ -216,83 +217,145 @@ class SurveyDocumentState extends State<SurveyDocument> {
                                       ),
                                     ),
                                     Container(
-                                      child: !file.containsKey(data[index]['id'].toString())
-                                          ? Container(
-                                              alignment: Alignment.center,
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.oonaPurple),
-                                                    onPressed: () {
-                                                      id[index] = data[index]['id'].toString();
-                                                      _getFromGallery(data[index]['id'].toString(), context);
-                                                    },
-                                                    child: const Text("Upload from Gallery"),
-                                                  ),
-                                                  Container(
-                                                    width: 40.0,
-                                                  ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.oonaPurple),
-                                                    onPressed: () {
-                                                      id[index] = data[index]['id'].toString();
-                                                      _getFromCamera(data[index]['id'].toString(), context);
-                                                    },
-                                                    child: const Text("Take a Photo"),
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          : GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  file[data[index]['id']].delete();
-                                                  file[data[index]['id']] = 'null';
-                                                });
-                                              },
-                                              child: Container(
-                                                child: file[data[index]['id'].toString()] != "null"
-                                                    ? lookupMimeType(file[data[index]['id'].toString()]!.path)!.split('/')[0].toString() == 'image'
-                                                        ? Image.file(
-                                                            file[data[index]['id'].toString()]!,
-                                                            fit: BoxFit.cover,
-                                                          )
-                                                        : Column(
-                                                            children: [
-                                                              const Icon(Icons.insert_drive_file),
-                                                              Text(p.basename(file[data[index]['id'].toString()]!.path))
-                                                            ],
-                                                          )
-                                                    : Container(
-                                                        alignment: Alignment.center,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: <Widget>[
-                                                            ElevatedButton(
-                                                              //color: Colors.greenAccent,
-                                                              onPressed: () {
-                                                                id[index] = data[index]['id'].toString();
-                                                                _getFromGallery(data[index]['id'].toString(), context);
-                                                              },
-                                                              child: const Text("Upload from Gallery"),
-                                                            ),
-                                                            Container(
-                                                              width: 40.0,
-                                                            ),
-                                                            ElevatedButton(
-                                                              //color: Colors.lightGreenAccent,
-                                                              onPressed: () {
-                                                                id[index] = data[index]['id'].toString();
-                                                                _getFromCamera(data[index]['id'].toString(), context);
-                                                              },
-                                                              child: const Text("Take a Photo"),
-                                                            )
-                                                          ],
-                                                        ),
+                                      child:
+                                          !file.containsKey(
+                                                  data[index]['id'].toString())
+                                              ? Container(
+                                                  alignment: Alignment.center,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .oonaPurple),
+                                                        onPressed: () {
+                                                          id[index] =
+                                                              data[index]['id']
+                                                                  .toString();
+                                                          _getFromGallery(
+                                                              data[index]['id']
+                                                                  .toString(),
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                            "Upload from Gallery"),
                                                       ),
-                                              ),
-                                            ),
+                                                      Container(
+                                                        width: 40.0,
+                                                      ),
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .oonaPurple),
+                                                        onPressed: () {
+                                                          id[index] =
+                                                              data[index]['id']
+                                                                  .toString();
+                                                          _getFromCamera(
+                                                              data[index]['id']
+                                                                  .toString(),
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                            "Take a Photo"),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      file[data[index]['id']]
+                                                          .delete();
+                                                      file[data[index]['id']] =
+                                                          'null';
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    child: file[data[index]
+                                                                    ['id']
+                                                                .toString()] !=
+                                                            "null"
+                                                        ? lookupMimeType(file[data[index]['id']
+                                                                            .toString()]!
+                                                                        .path)!
+                                                                    .split(
+                                                                        '/')[0]
+                                                                    .toString() ==
+                                                                'image'
+                                                            ? Image.file(
+                                                                file[data[index]
+                                                                        ['id']
+                                                                    .toString()]!,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              )
+                                                            : Column(
+                                                                children: [
+                                                                  const Icon(Icons
+                                                                      .insert_drive_file),
+                                                                  Text(p.basename(
+                                                                      file[data[index]['id']
+                                                                              .toString()]!
+                                                                          .path))
+                                                                ],
+                                                              )
+                                                        : Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: <
+                                                                  Widget>[
+                                                                ElevatedButton(
+                                                                  //color: Colors.greenAccent,
+                                                                  onPressed:
+                                                                      () {
+                                                                    id[index] = data[index]
+                                                                            [
+                                                                            'id']
+                                                                        .toString();
+                                                                    _getFromGallery(
+                                                                        data[index]['id']
+                                                                            .toString(),
+                                                                        context);
+                                                                  },
+                                                                  child: const Text(
+                                                                      "Upload from Gallery"),
+                                                                ),
+                                                                Container(
+                                                                  width: 40.0,
+                                                                ),
+                                                                ElevatedButton(
+                                                                  //color: Colors.lightGreenAccent,
+                                                                  onPressed:
+                                                                      () {
+                                                                    id[index] = data[index]
+                                                                            [
+                                                                            'id']
+                                                                        .toString();
+                                                                    _getFromCamera(
+                                                                        data[index]['id']
+                                                                            .toString(),
+                                                                        context);
+                                                                  },
+                                                                  child: const Text(
+                                                                      "Take a Photo"),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                  ),
+                                                ),
                                     ),
                                   ],
                                 ),
@@ -312,10 +375,10 @@ class SurveyDocumentState extends State<SurveyDocument> {
     //if (file.length > 0) {
     //debugPrint(file.toString());
     if (file.length == docListController.count && !file.containsValue("null")) {
-      if(data['TOC'] == '0212' || data['TOC'] == '0214'){
-        Get.to( SurveyExtFr(), arguments: [data, surveyResult]);
-      } else{
-        Get.to( SurveyTwExtFr(), arguments: [data, surveyResult]);
+      if (data['TOC'] == '0212' || data['TOC'] == '0214') {
+        Get.to(SurveyExtFr(), arguments: [data, surveyResult]);
+      } else {
+        Get.to(SurveyTwExtFr(), arguments: [data, surveyResult]);
       }
     } else {
       surveyResult.pendingFlag = "1";
@@ -330,17 +393,18 @@ class SurveyDocumentState extends State<SurveyDocument> {
         builder: (context, child) => Theme(
           data: ThemeData(
             textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(foregroundColor: AppColors.oonaPurple),
+              style:
+                  TextButton.styleFrom(foregroundColor: AppColors.oonaPurple),
             ),
           ),
           child: child,
         ),
       );
       if (result == OkCancelResult.ok) {
-        if(data['TOC'] == '0212' || data['TOC'] == '0214'){
-          Get.to( SurveyExtFr(), arguments: [data, surveyResult]);
-        } else{
-          Get.to( SurveyTwExtFr(), arguments: [data, surveyResult]);
+        if (data['TOC'] == '0212' || data['TOC'] == '0214') {
+          Get.to(() => SurveyExtFr(), arguments: [data, surveyResult]);
+        } else {
+          Get.to(() => SurveyTwExtFr(), arguments: [data, surveyResult]);
         }
       }
     }

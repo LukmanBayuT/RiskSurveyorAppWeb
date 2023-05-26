@@ -54,6 +54,7 @@ dependencies:
   heic_to_jpg: ^0.2.0
   html: ^0.15.3
   image_picker: ^0.8.7+1
+  image_picker_web: ^3.0.0+1
   intl: ^0.17.0
   map_picker: ^0.0.3
   maps_launcher: ^2.2.0

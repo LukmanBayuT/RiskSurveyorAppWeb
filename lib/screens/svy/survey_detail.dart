@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -168,7 +169,8 @@ class _SurveyDetailState extends State<SurveyDetail> {
                       ),
                     ),
                     onTap: () {
-                      launchUrl(Uri.parse("tel://${data['PICPhone'].toString()}"));
+                      launchUrl(
+                          Uri.parse("tel://${data['PICPhone'].toString()}"));
                     },
                   ),
                 ],
@@ -185,12 +187,18 @@ class _SurveyDetailState extends State<SurveyDetail> {
               child: ElevatedButton(
                 //textColor: const Color(0xFF6200EE),
                 onPressed: () async {
-                  final Directory appPath = await getApplicationDocumentsDirectory();
-                  final String newPath = '${appPath.path}/${data['QuotationNo']}';
-                  if(!Directory('$newPath').existsSync()){
-                    Directory('$newPath').create(recursive: true);
+                  if (!kIsWeb) {
+                    final Directory appPath =
+                        await getApplicationDocumentsDirectory();
+                    final String newPath =
+                        '${appPath.path}/${data['QuotationNo']}';
+                    if (!Directory('$newPath').existsSync()) {
+                      Directory('$newPath').create(recursive: true);
+                    }
+                    Get.to(() => SurveyForm(), arguments: data);
+                  } else {
+                    Get.to(() => SurveyForm(), arguments: data);
                   }
-                  Get.to(SurveyForm(), arguments: data);
                 },
                 child: Text(
                   'START SURVEY',
